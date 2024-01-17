@@ -64,85 +64,116 @@ const images = [
   },
 ];
 
+// const galleryContainer = document.querySelector('.gallery');
+
+// galleryContainer.addEventListener('click', onGalleryImgClick);
+
+// renderGallery(images);
+
+// const instance = basicLightbox.create(
+//   `<img class="modal-img" src="" alt="modal image" />`,
+//   {
+//     onShow: instance => { document.addEventListener('keydown', onEscPress); },
+//     onClose: instance => { document.removeEventListener('keydown', onEscPress); },
+//   },
+// );
+
+
+// function renderGallery(images) {
+//   const markup = images.map(({preview, original, description}) => `<li class="gallery-item">
+//   <a class="gallery-link" href="${original}">
+//     <img
+//       class="gallery-image"
+//       src="${preview}"
+//       data-source="${original}"
+//       alt="${description}"
+//     />
+//   </a>
+// </li>`
+//   )
+//     .join('');
+//   // galleryContainer.innerHTML = markup;
+//   galleryContainer.insertAdjacentHTML('beforeend', markup);
+// }
+
+// function onGalleryImgClick(event) {
+//   event.preventDefault();
+//   if (event.target.nodeName !== 'img') {
+//     return;
+//   }
+
+//   const modalImg = instance.element().querySelector('.modal-img');
+//   modalImg.src = event.target.dataset.source;
+//   modalImg.alt = event.target.alt;
+//   instance.show();
+// }
+
+// function onEscPress(event) {
+//   if (event.code === 'Escape') {
+//     instance.close();
+//     document.removeEventListener('keydown', onEscPress);
+//   }
+// }
+
+
 const galleryContainer = document.querySelector('.gallery');
 
-function createGalleryItem({ preview, original, description }) {
-  const listItem = document.createElement('li');
-  listItem.classList.add('gallery-item');
+galleryContainer.addEventListener('click', onGalleryContainerClick);
 
-  const link = document.createElement('a');
-  link.classList.add('gallery-link');
-  link.href = original;
+renderGallery(images);
 
-  const image = document.createElement('img');
-  image.classList.add('gallery-image');
-  image.src = preview;
-  image.setAttribute('data-source', original);
-  image.alt = description;
+const instance = basicLightbox.create(
+  `<img class="modal-img" src="" alt="modal image" />`,
+  {
+    onShow: (instance) => {
+      document.addEventListener('keydown', onEscPress);
+    },
+    onClose: (instance) => {
+      document.removeEventListener('keydown', onEscPress);
+    },
+  }
+);
 
-  link.appendChild(image);
-  listItem.appendChild(link);
+function renderGallery(images) {
+  const markup = images
+    .map(
+      ({ preview, original, description }) =>
+        `<li class="gallery-item">
+          <a class="gallery-link" href="${original}">
+            <img
+              class="gallery-image"
+              src="${preview}"
+              data-source="${original}"
+              alt="${description}"
+            />
+          </a>
+        </li>`
+    )
+    .join('');
 
-  return listItem;
+  galleryContainer.innerHTML = `<ul class="gallery-list">${markup}</ul>`;
 }
 
-images.forEach(image => {
-  const galleryItem = createGalleryItem(image);
-  galleryContainer.appendChild(galleryItem);
-});
-
-
-// JavaScript для відкривання модального вікна та закриття
-
-document.querySelector('.gallery').addEventListener('click', onGalleryClick);
-
-function onGalleryClick(event) {
+function onGalleryContainerClick(event) {
   event.preventDefault();
+  const target = event.target;
 
-  if (event.target.nodeName !== 'IMG') {
+  if (target.nodeName !== 'IMG') {
     return;
   }
 
-  const largeImageUrl = event.target.dataset.source;
-
-  const instance = basicLightbox.create(`
-    <img src="${largeImageUrl}" alt="Large Image">
-  `);
-
+  const modalImg = instance.element().querySelector('.modal-img');
+  modalImg.setAttribute('src', target.dataset.source);
+  modalImg.setAttribute('alt', target.alt);
   instance.show();
+}
 
-  document.addEventListener('keydown', onKeyDown);
-
-  function onKeyDown(event) {
-    if (event.key === 'Escape') {
-      instance.close();
-      document.removeEventListener('keydown', onKeyDown);
-    }
+function onEscPress(event) {
+  if (event.code === 'Escape') {
+    instance.close();
   }
 }
 
 
 
 
-
-
-
-function createGallery() {
-  const galleryContainer = document.querySelector('.gallery');
-
-  const galleryItems = images.map((image) => {
-    const listItem = document.createElement('li');
-    listItem.classList.add('gallery-item');
-
-    const imgElement = document.createElement('img');
-    imgElement.src = image.url;
-    imgElement.alt = image.alt;
-
-    listItem.appendChild(imgElement);
-    return listItem;
-  });
-
-  galleryContainer.append(...galleryItems);
-}
-
-createGallery();
