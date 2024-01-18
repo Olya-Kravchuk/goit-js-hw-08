@@ -64,58 +64,6 @@ const images = [
   },
 ];
 
-// const galleryContainer = document.querySelector('.gallery');
-
-// galleryContainer.addEventListener('click', onGalleryImgClick);
-
-// renderGallery(images);
-
-// const instance = basicLightbox.create(
-//   `<img class="modal-img" src="" alt="modal image" />`,
-//   {
-//     onShow: instance => { document.addEventListener('keydown', onEscPress); },
-//     onClose: instance => { document.removeEventListener('keydown', onEscPress); },
-//   },
-// );
-
-
-// function renderGallery(images) {
-//   const markup = images.map(({preview, original, description}) => `<li class="gallery-item">
-//   <a class="gallery-link" href="${original}">
-//     <img
-//       class="gallery-image"
-//       src="${preview}"
-//       data-source="${original}"
-//       alt="${description}"
-//     />
-//   </a>
-// </li>`
-//   )
-//     .join('');
-//   // galleryContainer.innerHTML = markup;
-//   galleryContainer.insertAdjacentHTML('beforeend', markup);
-// }
-
-// function onGalleryImgClick(event) {
-//   event.preventDefault();
-//   if (event.target.nodeName !== 'img') {
-//     return;
-//   }
-
-//   const modalImg = instance.element().querySelector('.modal-img');
-//   modalImg.src = event.target.dataset.source;
-//   modalImg.alt = event.target.alt;
-//   instance.show();
-// }
-
-// function onEscPress(event) {
-//   if (event.code === 'Escape') {
-//     instance.close();
-//     document.removeEventListener('keydown', onEscPress);
-//   }
-// }
-
-
 const galleryContainer = document.querySelector('.gallery');
 
 galleryContainer.addEventListener('click', onGalleryContainerClick);

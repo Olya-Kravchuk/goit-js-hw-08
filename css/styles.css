@@ -9,3 +9,8 @@ ul {
 li {
   width: calc(100% / 3 - 48px);
 }
+
+img {
+  width: 100%;
+  height: auto;
+}
